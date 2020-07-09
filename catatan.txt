@@ -1,0 +1,9 @@
+tahap 1 
+-installasi program dan library
+- pembuatan akun firebase
+- CRUD
+tahap 2
+-web server 
+-jinja
+
+requirments.txt adalah kumpulan  library yang dibutuhkan untuk menjalankan program
