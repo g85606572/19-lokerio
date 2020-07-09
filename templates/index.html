@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="icon" href="https://i.ibb.co/86bzmTg/seeloker.png" />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=PT+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Cabin|PT+Sans&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>Loker</title>
+    <style>
+      * {
+        font-family: "Cabin", sans-serif;
+      }
+
+      @media only screen and (max-width: 600px) {
+        body {
+          padding: 0 !important;
+        }
+
+        .m {
+          margin-top: 20px;
+        }
+      }
+    </style>
+  </head>
+
+  <body style="padding: 30px; background-color: rgb(218, 235, 255);">
+    <div style="padding: 30px; border-radius: 10px;">
+      <div class="row">
+        <div class="col-md-3">
+          <img
+            src="https://i.ibb.co/86bzmTg/seeloker.png"
+            style="
+              display: block;
+              margin-left: auto;
+              margin-right: auto;
+              width: 50%;
+            "
+            class="img-fluid"
+            alt=""
+          />
+        </div>
+        <div class="col-md-9 m" style="margin-top: auto;">
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              id="myInput"
+              style="padding: 25px;"
+              placeholder="Sortir"
+              aria-describedby="emailHelp"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3 mt-3">
+          <div
+            style="background-color: rgb(255, 153, 0); padding: 20px;"
+            class="nav flex-column nav-pills"
+            id="v-pills-tab"
+            role="tablist"
+            aria-orientation="vertical"
+          >
+            <h4 style="color: white;">Pilih Kriteria</h4>
+            <div class="form-group">
+              <input
+                type="email"
+                placeholder="Masukan Kata Kunci"
+                class="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+              />
+            </div>
+            <div class="form-group">
+              <select class="form-control" id="exampleFormControlSelect1">
+                <option>Pilih Sumber</option>
+                <option>Jobstreet</option>
+                <option>Jobstreet</option>
+                <option>Jobstreet</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <input
+                type="email"
+                placeholder="Gaji Minimum (IDR)"
+                class="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+              />
+            </div>
+            <button
+              class="btn btn-warning"
+              style="color: white; font-weight: bold;"
+            >
+              Cari Lowongan
+            </button>
+          </div>
+        </div>
+        <div class="col-sm-9 mt-3">
+          <table>
+            <tbody id="myTable">
+              {% for i in data %}
+              <tr>
+                <td>
+                  <div
+                    class="card"
+                    style="box-shadow: 0px 0px 5px 0px rgba(184, 184, 184, 1);"
+                  >
+                    <div class="card-body">
+                      <h4
+                        style="margin-bottom: 0 !important;"
+                        class="card-title"
+                      >
+                        {{ i.company }}
+                      </h4>
+                      <p class="card-text" style="margin-top: 0 !important;">
+                        {{ i.position }}
+                      </p>
+                      <p>
+                        {{ i.requirement }}
+                      </p>
+                      <a href="#" class="btn btn-primary">Detail</a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+          var value = $(this).val().toLowerCase();
+          $("#myTable tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
