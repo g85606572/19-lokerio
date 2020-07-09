@@ -10,7 +10,8 @@ app = Flask(__name__)
 
 @app.route('/', methods=['POST','GET'])
 def home():
-    data = db.reference("loker").order_by_child("id").get().values()
+    jobstreet = db.reference("jobstreet").order_by_child("id").get().values()
+    loker = db.reference("loker").order_by_child("id").get().values()
     return render_template('index.html',data=data)
 
 if __name__ == "__main__":
