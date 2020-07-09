@@ -5,5 +5,8 @@ tahap 1
 tahap 2
 -web server 
 -jinja
+tahap 3
+-html tag
+
 
 requirments.txt adalah kumpulan  library yang dibutuhkan untuk menjalankan program

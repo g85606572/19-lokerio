@@ -74,6 +74,7 @@ def main():
         pass
 
 def jobstreet():
+
     url= "https://www.jobstreet.co.id/id/job-search/job-vacancy.php?ojs=10&key=IT"
     user_agent = random.choice(user_agent_list)
     headers = {'User-Agent': user_agent}
@@ -92,12 +93,11 @@ def jobstreet():
             "company": y.text,
             "salary" :salary,
             "requirement": z.text,
-        
             "link":l.get("href")
         }
         time.sleep(1)
         print(random.choice(progress))
-        print(data)
+        #print(data)
         db.reference("jobstreet").child(id).update(data)
         
 
