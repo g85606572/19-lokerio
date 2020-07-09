@@ -92,16 +92,16 @@ def jobstreet():
             "company": y.text,
             "salary" :salary,
             "requirement": z.text,
-            "time" : "20 Agustus",
+        
             "link":l.get("href")
         }
         time.sleep(1)
         print(random.choice(progress))
         print(data)
-        #db.reference("loker").child(id).update(data)
+        db.reference("jobstreet").child(id).update(data)
         
 
-#jobstreet()
+jobstreet()
 
 
 def info_loker():
@@ -146,6 +146,6 @@ def loker_id():
         print()
         
 
-loker_id()
+#loker_id()
 
 
