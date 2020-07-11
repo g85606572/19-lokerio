@@ -97,7 +97,7 @@ def jobstreet():
         }
         time.sleep(1)
         print(random.choice(progress))
-        #print(data)
+        print(data)
         db.reference("jobstreet").child(id).update(data)
         
 
