@@ -29,12 +29,10 @@
       * {
         font-family: "Cabin", sans-serif;
       }
-
       @media only screen and (max-width: 600px) {
         body {
           padding: 0 !important;
         }
-
         .m {
           margin-top: 20px;
         }
@@ -81,38 +79,44 @@
             aria-orientation="vertical"
           >
             <h4 style="color: white;">Pilih Kriteria</h4>
+        <form action="/search" method="POST">
             <div class="form-group">
               <input
-                type="email"
+                type="text"
                 placeholder="Masukan Kata Kunci"
                 class="form-control"
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
+                name="kw"
               />
             </div>
             <div class="form-group">
-              <select class="form-control" id="exampleFormControlSelect1">
+              <select name="db" class="form-control" id="exampleFormControlSelect1">
                 <option>Pilih Sumber</option>
-                <option>Jobstreet</option>
-                <option>Jobstreet</option>
-                <option>Jobstreet</option>
+                <option value="topkarir"> Topkarir </option>
+                <option value="jooble"> Jooble </option>
+                <option value="jobstreet"> Job Street </option>
+                <option value="karir"> Karir </option>
+                <option value="lokerid"> Loker Id </option>
               </select>
             </div>
             <div class="form-group">
               <input
-                type="email"
+                type="text"
                 placeholder="Gaji Minimum (IDR)"
                 class="form-control"
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
+                name="sal"
               />
             </div>
-            <button
+            <button type="submit"
               class="btn btn-warning"
               style="color: white; font-weight: bold;"
             >
               Cari Lowongan
             </button>
+        </form>
           </div>
         </div>
         <div class="col-sm-9 mt-3">
@@ -135,20 +139,39 @@
                       <p class="card-text" style="margin-top: 0 !important;">
                         {{ i.position }}
                       </p>
-                      <p>
-                        {{ i.requirement }}
-                      </p>
-                      <a href="#" class="btn btn-primary">Detail</a>
+                      <p> {{ i.requirement }} </p>
+                      <p> <b> {{ i.salary }} </p> </b> <a href="{{i.link}}" class="btn btn-primary"target="_blank">Detail</a>
                     </div>
                   </div>
                 </td>
               </tr>
-            </tbody>
-            {% endfor %}
-          </table>
-          <table>
-            <tbody id="myTable">
-              {% for i in loker %}
+
+              {% endfor %} {% for i in lokerid %}
+              <tr>
+                <td>
+                  <div
+                    class="card"
+                    style="box-shadow: 0px 0px 5px 0px rgba(184, 184, 184, 1);"
+                  >
+                    <div class="card-body">
+                      <h4
+                        style="margin-bottom: 0 !important;"
+                        class="card-title"
+                      >
+                        {{ i.company }}
+                      </h4>
+                      <p class="card-text" style="margin-top: 0 !important;">
+                        {{ i.position }}
+                      </p>
+                      <p> {{ i.requirement }} </p>
+                      <p> <b> {{ i.salary }} </p> </b> <a href="{{i.link}}" class="btn btn-primary"target="_blank">Detail</a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              {% endfor %}
+              {% for i in karir %}
               <tr>
                 <td>
                   <div
@@ -168,19 +191,14 @@
                       <p>
                         {{ i.requirement }}
                       </p>
-                      <a href="#" class="btn btn-primary">Detail</a>
+                      <p> <b> {{ i.salary }} </p> </b> <a href="{{i.link}}" class="btn btn-primary"target="_blank">Detail</a>
                     </div>
                   </div>
                 </td>
               </tr>
             </tbody>
             {% endfor %}
-          </table>
-        </div>
-        <div class="col-sm-9 mt-3">
-          <table>
-            <tbody id="myTable">
-              {% for i in jobstreet %}
+              {% for i in topkarir %}
               <tr>
                 <td>
                   <div
@@ -200,7 +218,34 @@
                       <p>
                         {{ i.requirement }}
                       </p>
-                      <a href="#" class="btn btn-primary">Detail</a>
+                      <p> <b> {{ i.salary }} </p> </b> <a href="{{i.link}}" class="btn btn-primary"target="_blank">Detail</a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            {% endfor %}
+              {% for i in jooble %}
+              <tr>
+                <td>
+                  <div
+                    class="card"
+                    style="box-shadow: 0px 0px 5px 0px rgba(184, 184, 184, 1);"
+                  >
+                    <div class="card-body">
+                      <h4
+                        style="margin-bottom: 0 !important;"
+                        class="card-title"
+                      >
+                        {{ i.company }}
+                      </h4>
+                      <p class="card-text" style="margin-top: 0 !important;">
+                        {{ i.position }}
+                      </p>
+                      <p>
+                        {{ i.requirement }}
+                      </p>
+                      <p> <b> {{ i.salary }} </p> </b> <a href="{{i.link}}" class="btn btn-primary"target="_blank">Detail</a>
                     </div>
                   </div>
                 </td>
@@ -240,5 +285,6 @@
         });
       });
     </script>
+    
   </body>
 </html>

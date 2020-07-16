@@ -41,7 +41,7 @@ parser.add_argument('-e', help='Execute/ Start crawling')
 args = parser.parse_args()
 
 wt = ['https://www.jobstreet.co.id/id/job-search/job-vacancy.php?ojs=10&key=it']
-#wt = [' https://www.jobstreet.co.id ' ,'https://www.infolokerlampung.net' ,'https://www.loker.id' ,'https://www.karir.com' ,'https://www.urbanhire.com'] 
+#wt = [' https://www.jobstreet.co.id ' ,'https://www.infolokerlampung.net' ,'https://www.loker.id' ,'https://www.karir.com' ,'https://www.urbanhire.com','https://www.topkarir.com/lowongan?search_joblist=IT&adv_inter=&adv_lokasi=&adv_pendidikan=&group=0&adv_posisi=&adv_gaji=&adv_gaji_max=0&adv_industri=0'] 
 
 end = '\n---------------end\n'
 
@@ -74,7 +74,6 @@ def main():
         pass
 
 def jobstreet():
-
     url= "https://www.jobstreet.co.id/id/job-search/job-vacancy.php?ojs=10&key=IT"
     user_agent = random.choice(user_agent_list)
     headers = {'User-Agent': user_agent}
@@ -97,55 +96,130 @@ def jobstreet():
         }
         time.sleep(1)
         print(random.choice(progress))
-        #print(data)
-        db.reference("jobstreet").child(id).update(data)
+        #db.reference("jobstreet").child(id).update(data)
         
 
-jobstreet()
+#jobstreet()
 
-
-def info_loker():
-    url= "https://www.infolokerlampung.net/search?q=IT"
-    user_agent = random.choice(user_agent_list)
-    headers = {'User-Agent': user_agent}
-    r = requests.get(url,headers=headers, verify=True)
-    soup = BeautifulSoup(r.content,  "html.parser")
-    data = soup.find_all("h2",class_='post-title entry-title')
-    for i in data:
-        link = i.find('a').get('href')
-        com = i.find('a').text
-        print(com)
-        print(link)
-        x = requests.get(link,headers=headers, verify=True)
-        y = BeautifulSoup(x.content,  "html.parser")
-        lok = y.find_all("b")
-        print(lok)
-        print()
-#info_loker()
-        
 
 def loker_id():
-    url= "https://www.loker.id/cari-lowongan-kerja?q=it&lokasi=0"
+    url= "https://www.loker.id/cari-lowongan-kerja?q=IT&lokasi=0"
     user_agent = random.choice(user_agent_list)
     headers = {'User-Agent': user_agent}
     r = requests.get(url,headers=headers, verify=True)
     soup = BeautifulSoup(r.content,  "html.parser")
     data = soup.find_all("div",class_='job-box')
-    for i in data:
-        link = i.find('h3',class_="media-heading")
-        print(link.find('a').text)
-        print('href :',link.find('a').get('href'))
-        href= link.find('a').get('href')
-        z = requests.get(href,headers=headers, verify=True)
-        r = BeautifulSoup(z.content,  "html.parser")
-        d= r.find_all('div',class_='panel-body padding-horizontal-double padding-vertical-double')
-        print(d)
-        print()
-        print()
-        print()
-        print()
-        
+    position = soup.find_all("h3",class_="media-heading h4")
+    company = soup.find_all("table",class_='table')
+    salary = '-'
+    progress = [ ".","..","...","....","....." ]
+
+    for w,x  in zip(position,company) :
+        l= w.find('a')
+        id = _serial()
+        data = {
+            "position":w.text,
+            "company": x.text,
+            "salary" :salary,
+            "requirement": x.text,
+            "link":l.get("href")
+        }
+        time.sleep(1)
+        print(random.choice(progress))
+        db.reference("lokerid").child(id).update(data)
+
 
 #loker_id()
+
+
+def karir():
+    url= "https://www.karir.com/search"
+    user_agent = random.choice(user_agent_list)
+    headers = {'User-Agent': user_agent}
+    r = requests.get(url,headers=headers, verify=True)
+    soup = BeautifulSoup(r.content,  "html.parser")
+    position = soup.find_all("h4",class_='tdd-function-name --semi-bold --inherit')
+    company = soup.find_all("div",class_='tdd-company-name h8 --semi-bold')
+    requirement = soup.find_all("span",class_="tdd-experience")
+    salary = soup.find_all("span",class_="tdd-salary")
+    link = soup.find_all("a",class_="btn --full")
+    progress = [ ".","..","...","....","....." ]
+    for x, y,z,l,s in zip(position,company,requirement,link,salary):
+        id = _serial()
+        data = {
+            "position":x.text,
+            "company": y.text,
+            "salary" :s.text,
+            "requirement":'Pengalaman : '+ z.text,
+            "link":'https://www.karir.com'+l.get("href")
+        }
+        time.sleep(1)
+        print(random.choice(progress))
+        print()
+        pprint(data)
+        db.reference("karir").child(id).update(data)
+#karir()
+
+
+def topkarir():
+    url= "https://www.topkarir.com/lowongan?search_joblist=IT&adv_inter=&adv_lokasi=&adv_pendidikan=&group=0&adv_posisi=&adv_gaji=&adv_gaji_max=0&adv_industri=0"
+    user_agent = random.choice(user_agent_list)
+    headers = {'User-Agent': user_agent}
+    r = requests.get(url,headers=headers, verify=True)
+    soup = BeautifulSoup(r.content,  "html.parser")
+    #data = soup.find_all("div",class_='caption')
+    position = soup.find_all("h3",class_='job-title')
+    company = soup.find_all("h2",class_='company-title title')
+    requirement = soup.find_all("div",class_="keterangan")
+    #salary = soup.find_all("span",class_="")
+    link = soup.find_all("a",class_="btn-small lightblue track_alto")
+    progress = [ ".","..","...","....","....." ]
+    for x, y,z,l in zip(position,company,requirement,link):
+        id = _serial()
+        data = {
+            "position":x.text,
+            "company": y.text,
+            "salary" : '-',
+            "requirement": z.text,
+            "link":l.get("data-url")
+        }
+        time.sleep(1)
+        print(random.choice(progress))
+        print()
+        print(data)
+        #db.reference("topkarir").child(id).update(data)
+#topkarir()
+
+
+
+def jooble():
+    url= "https://id.jooble.org/m/lowongan-kerja-IT"
+    user_agent = random.choice(user_agent_list)
+    headers = {'User-Agent': user_agent}
+    r = requests.get(url,headers=headers, verify=True)
+    soup = BeautifulSoup(r.content,  "html.parser")
+    #data = soup.find_all("div",class_='caption')
+    position = soup.find_all("h2",class_='_1e859')
+    company = soup.find_all("span",class_='caption _8d375') 
+    requirement = soup.find_all("div",class_="_0b1c1")
+    salary = soup.find_all("p",class_="_6f85c")
+    link = soup.find_all("a",class_="baa11")
+    progress = [ ".","..","...","....","....." ]
+    for x, y,z,l,s in zip(position,company,requirement,link,salary):
+        id = _serial()
+        data = {
+            "position":x.text,
+            "company": y.text,
+            "salary" : s.text,
+            "requirement": z.text,
+            "link":"https://id.jooble.org"+l.get("href")
+        }
+        time.sleep(1)
+        print(random.choice(progress))
+        print()
+        print(data)
+        db.reference("jooble").child(id).update(data)
+jooble()
+
 
 
