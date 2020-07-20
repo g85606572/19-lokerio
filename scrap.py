@@ -43,6 +43,11 @@ args = parser.parse_args()
 wt = ['https://www.jobstreet.co.id/id/job-search/job-vacancy.php?ojs=10&key=it']
 #wt = [' https://www.jobstreet.co.id ' ,'https://www.infolokerlampung.net' ,'https://www.loker.id' ,'https://www.karir.com' ,'https://www.urbanhire.com','https://www.topkarir.com/lowongan?search_joblist=IT&adv_inter=&adv_lokasi=&adv_pendidikan=&group=0&adv_posisi=&adv_gaji=&adv_gaji_max=0&adv_industri=0'] 
 
+#https://www.jobstreet.co.id 
+#https://www.jooble.com
+#https://www.loker.id
+#https://www.karir.com' 
+#https://www.topkarir.co
 end = '\n---------------end\n'
 
 def target():
