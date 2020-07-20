@@ -20,12 +20,12 @@ def home():
     return render_template('index.html',lokerid=lokerid,jobstreet=jobstreet,karir=karir,topkarir=topkarir,jooble=jooble)
 
 @app.route('/search', methods=['POST'])
-def search():
+def _search():
     kw = request.form.get('kw') 
     src = request.form.get('db') 
     sal = request.form.get('sal') 
-    data = db.reference(src).order_by_child('id').get().values()
-    return render_template('index.html',lokerid=data,jobstreet='',karir='',topkarir='',jooble='')
+    search = db.reference(src).order_by_child('salary').start_at(str(sal)).get().values()
+    return render_template('index.html',lokerid='',jobstreet='',karir='',topkarir='',jooble='',search=search,param=src)
     #return redirect(request.referrer)
 
 

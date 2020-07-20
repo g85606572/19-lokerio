@@ -106,8 +106,8 @@
               />
             </div>
             <div class="form-group">
-              <select name="db" class="form-control" id="exampleFormControlSelect1">
-                <option>Pilih Sumber</option>
+              <select required name="db" class="form-control" id="exampleFormControlSelect1">
+                <option disabled>Pilih Sumber</option>
                 <option value="topkarir"> Topkarir </option>
                 <option value="jooble"> Jooble </option>
                 <option value="jobstreet"> Job Street </option>
@@ -116,13 +116,10 @@
               </select>
             </div>
             <div class="form-group">
-              <input
-                type="text"
-                placeholder="Gaji Minimum (IDR)"
-                class="form-control"
+              <input type="text" placeholder="Gaji Minimum (IDR)" class="form-control"
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
-                name="sal"
+                name="sal"id="id_step2-number_2" name="step2-number_2"
               />
             </div>
             <button type="submit"
@@ -136,7 +133,7 @@
         </div>
         <div class="col-sm-9 mt-3">
           <table>
-            <tbody id="myTable">
+            <tbody id="">
               {% for i in jobstreet %}
               <tr>
                 <td>
@@ -149,19 +146,22 @@
                         style="margin-bottom: 0 !important;"
                         class="card-title"
                       >
-                        {{ i.company }}
+                      {{ i.company }} 
+                      <p style="display: none;"> {{ i.company.lower() }} </p>
                       </h4>
                       <p class="card-text" style="margin-top: 0 !important;">
                         {{ i.position }}
                       </p>
-                      <p> {{ i.requirement }} </p>
+                      <p> {{ i.requirement }}                        </p>
                       <p> <b> {{ i.salary }} </p> </b> <a href="{{i.link}}" class="btn btn-primary"target="_blank">Detail</a>
+                      <small class="float-right"> Sumber : Jobstreet</small>
                     </div>
                   </div>
                 </td>
               </tr>
 
-              {% endfor %} {% for i in lokerid %}
+              {% endfor %}
+              {% for i in lokerid %}
               <tr>
                 <td>
                   <div
@@ -174,12 +174,14 @@
                         class="card-title"
                       >
                         {{ i.company }}
+                      <p style="display: none;"> {{ i.company.lower() }} </p>
                       </h4>
                       <p class="card-text" style="margin-top: 0 !important;">
                         {{ i.position }}
                       </p>
-                      <p> {{ i.requirement }} </p>
+                      <p> {{ i.requirement }}                        </p>
                       <p> <b> {{ i.salary }} </p> </b> <a href="{{i.link}}" class="btn btn-primary"target="_blank">Detail</a>
+                      <small class="float-right"> Sumber : Loker Id</small>
                     </div>
                   </div>
                 </td>
@@ -199,6 +201,7 @@
                         class="card-title"
                       >
                         {{ i.company }}
+                      <p style="display: none;"> {{ i.company.lower() }} </p>
                       </h4>
                       <p class="card-text" style="margin-top: 0 !important;">
                         {{ i.position }}
@@ -207,6 +210,7 @@
                         {{ i.requirement }}
                       </p>
                       <p> <b> {{ i.salary }} </p> </b> <a href="{{i.link}}" class="btn btn-primary"target="_blank">Detail</a>
+                      <small class="float-right"> Sumber : Karir</small>
                     </div>
                   </div>
                 </td>
@@ -226,6 +230,7 @@
                         class="card-title"
                       >
                         {{ i.company }}
+                      <p style="display: none;"> {{ i.company.lower() }} </p>
                       </h4>
                       <p class="card-text" style="margin-top: 0 !important;">
                         {{ i.position }}
@@ -234,6 +239,7 @@
                         {{ i.requirement }}
                       </p>
                       <p> <b> {{ i.salary }} </p> </b> <a href="{{i.link}}" class="btn btn-primary"target="_blank">Detail</a>
+                      <small class="float-right"> Sumber : Top Karir</small>
                     </div>
                   </div>
                 </td>
@@ -253,6 +259,7 @@
                         class="card-title"
                       >
                         {{ i.company }}
+                      <p style="display: none;"> {{ i.company.lower() }} </p>
                       </h4>
                       <p class="card-text" style="margin-top: 0 !important;">
                         {{ i.position }}
@@ -261,12 +268,41 @@
                         {{ i.requirement }}
                       </p>
                       <p> <b> {{ i.salary }} </p> </b> <a href="{{i.link}}" class="btn btn-primary"target="_blank">Detail</a>
+                      <small class="float-right"> Sumber : Jooble</small>
                     </div>
                   </div>
                 </td>
               </tr>
             </tbody>
             {% endfor %}
+                          {% for i in search %}
+              <tr>
+                <td>
+                  <div
+                    class="card"
+                    style="box-shadow: 0px 0px 5px 0px rgba(184, 184, 184, 1);"
+                  >
+                    <div class="card-body">
+                      <h4
+                        style="margin-bottom: 0 !important;"
+                        class="card-title"
+                      >
+                        {{ i.company }}
+                      <p style="display: none;"> {{ i.company.lower() }} </p>
+                      </h4>
+                      <p class="card-text" style="margin-top: 0 !important;">
+                        {{ i.position }}
+                      </p>
+                      <p> {{ i.requirement }}                        </p>
+                      <p> <b> {{ i.salary }} </p> </b> <a href="{{i.link}}" class="btn btn-primary"target="_blank">Detail</a>
+                      <small class="float-right"> Sumber : {{param.title()}}</small>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              {% endfor %}
+
           </table>
         </div>
       </div>
@@ -298,7 +334,8 @@
                 $("table tr").each(function (index) {
                     $row = $(this);
                     $row.show();
-                    if (index !== 0 && value) {
+                    if ( value) {
+                    //if (index !== 10 && value) {
                         var found = false;
                         $row.find("td").each(function () {
                             var cell = $(this).text();
@@ -384,15 +421,49 @@ $(function() {
         var searchTerm = $(this).val();
 
         // remove any old highlighted terms
-        $('body').removeHighlight();
+        $('table').removeHighlight();
 
         // disable highlighting if empty
         if ( searchTerm ) {
             // highlight the new term
-            $('body').highlight( searchTerm );
+            $('table').highlight( searchTerm );
         }
     });
 });
+
+</script>
+<script>
+  $(document).ready(function(){
+    $("input[type='text']").keyup(function(event){
+      // skip for arrow keys
+      if(event.which >= 37 && event.which <= 40){
+          event.preventDefault();
+      }
+      var $this = $(this);
+      var num = $this.val().replace(/,/gi, "").split("").reverse().join("");
+      
+      var num2 = RemoveRougeChar(num.replace(/(.{3})/g,"$1,").split("").reverse().join(""));
+      
+      console.log(num2);
+      
+      
+      // the following line has been simplified. Revision history contains original.
+      $this.val(num2);
+  });
+});
+
+function RemoveRougeChar(convertString){
+    
+    
+    if(convertString.substring(0,1) == ","){
+        
+        return convertString.substring(1, convertString.length)            
+        
+    }
+    return convertString;
+    
+}
+
 </script>
   </body>
 </html>
