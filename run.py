@@ -12,8 +12,9 @@ app = Flask(__name__)
 
 
 def findMatch(l, word):
+    print('A==========')
     print("\n".join(s for s in l if word.lower() in s.lower()))
-    print('==========')
+    print('B==========')
     return [s for s in l if word.lower() in s.lower()]
 
 
@@ -36,8 +37,8 @@ def home():
 @app.route('/search', methods=['POST'])  # JADI
 def _search():
     kw = request.form.get('kw')
-    print("keword : ", kw)
     src = request.form.get('db')
+    print("keword : ", kw, '\ndb : ', src)
     sal = request.form.get('sal')
     search = db.reference(src).order_by_child('company').get()
     myList = []
@@ -45,35 +46,25 @@ def _search():
         com = i.get('company')
         pos = i.get('position')
         sala = i.get('salary')
-        myList.append(com)
-        myList.append(pos)
-        myList.append(sala)
-    print(myList)
+        myList.append(com.strip())
+        myList.append(pos.strip())
+        myList.append(sala.strip())
+    # print(myList)
 
-    x = findMatch(myList, kw)
-    print('x : ', x)
-    for result in x:
-        # print(result)
+    C = findMatch(myList, str(kw))
+    print('-------------------')
+    print(C)
+    print('-------------------')
+
+    for A in C:
         match_company = db.reference(src).order_by_child(
-            'company').equal_to(result).get().values()
+            'company').equal_to(A).get().values()
         match_position = db.reference(src).order_by_child(
-            'position').equal_to(result).get().values()
+            'position').equal_to(A).get().values()
         match_salary = db.reference(src).order_by_child(
-            'salary').equal_to(result).get().values()
-        #print('match : ', match_company)
-        print("++++++++++")
-        return render_template('index.html', lokerid='', jobstreet='', karir='', topkarir='', jooble='', search=match_company, by_position=match_position, by_salary=match_salary, param=src)
+            'salary').equal_to(A).get().values()
+        return render_template('index.html', lokerid='', jobstreet='', karir='', topkarir='', jooble='', by_company=match_company, by_position=match_position, by_salary=match_salary, param=src)
     return render_template('index.html', lokerid='', jobstreet='', karir='', topkarir='', jooble='', search='', param=src)
-
-
-y = 'Rp 3.8juta - Rp 4juta'
-#y = '-'
-
-
-def Gaji(nilai_acak):
-    extract = y.split(' ')
-    juta = y.replace('juta', '000000')
-    print(extract, juta)
 
 
 if __name__ == "__main__":
