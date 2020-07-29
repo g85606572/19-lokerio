@@ -1,9 +1,9 @@
 Flask >=0.12.1
 gunicorn==19.7.1
 whitenoise==3.2.2
-psycopg2
 requests==2.21.0
 requests-oauthlib==1.0.0
 firebase-admin ==4.0.0 
 setuptools>=40.3.0
 Pyrebase== 3.0.27 
+beautifulsoup4== 4.9.1 

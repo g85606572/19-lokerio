@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="icon" href="https://i.ibb.co/86bzmTg/seeloker.png" />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=PT+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Cabin|PT+Sans&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>Loker</title>
+    <style>
+      * {
+        font-family: "Cabin", sans-serif;
+      }
+      @media only screen and (max-width: 600px) {
+        body {
+          padding: 0 !important;
+        }
+        .m {
+          margin-top: 20px;
+        }
+      }
+
+.highlight {
+    background-color: #fff34d;
+    -moz-border-radius: 5px; /* FF1+ */
+    -webkit-border-radius: 5px; /* Saf3-4 */
+    border-radius: 5px; /* Opera 10.5, IE 9, Saf5, Chrome */
+    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7); /* FF3.5+ */
+    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7); /* Saf3.0+, Chrome */
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7); /* Opera 10.5+, IE 9.0 */
+}
+
+.highlight {
+    padding:1px 4px;
+    margin:0 -4px;
+}
+    </style>
+  </head>
+
+  <body style="padding: 30px; background-color: rgb(218, 235, 255);">
+    <div style="padding: 30px; border-radius: 10px;">
+      <div class="row">
+        <div class="col-md-3">
+          <a href="/">
+          <img
+            src="https://i.ibb.co/86bzmTg/seeloker.png"
+            style="
+              display: block;
+              margin-left: auto;
+              margin-right: auto;
+              width: 50%;
+            "
+            class="img-fluid"
+            alt=""
+            />
+          </a>
+        </div>
+        <div class="col-md-9 m" style="margin-top: auto;">
+          <div class="form-group">
+            <input
+              id="text-search"
+              type="text"
+              class="form-control search-table"
+              style="padding: 25px;"
+              placeholder="Sortir"
+              aria-describedby="Keyword"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3 mt-3">
+          <div
+            style="background-color: rgb(255, 153, 0); padding: 20px;"
+            class="nav flex-column nav-pills"
+            id="v-pills-tab"
+            role="tablist"
+            aria-orientation="vertical"
+          >
+            <h4 style="color: white;">Pilih Kriteria</h4>
+        <form action="/search" method="POST">
+            <div class="form-group">
+              <input
+                type="text"
+                placeholder="Masukan Kata Kunci"
+                class="form-control"
+                id="input_query"
+                aria-describedby="emailHelp"
+                name="kw"
+              />
+            </div>
+            <div class="form-group">
+              <select required name="db" class="form-control" id="exampleFormControlSelect1">
+                <option disabled>Pilih Sumber</option>
+                <option value="topkarir"> Topkarir </option>
+                <option value="jooble"> Jooble </option>
+                <option value="jobstreet"> Job Street </option>
+                <option value="karir"> Karir </option>
+                <option value="lokerid"> Loker Id </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <input type="text" placeholder="Gaji Minimum (IDR)" class="form-control"
+                id="input_"
+                aria-describedby="emailHelp"
+                name="sal"id="id_step2-number_2" name="step2-number_2"
+              />
+            </div>
+            <button type="button"
+                    onclick="paleng()"
+              class="btn btn-warning query"
+              style="color: white; font-weight: bold;"
+            >
+              Cari Lowongan
+            </button>
+        </form>
+          </div>
+        </div>
+        <div class="col-sm-9 mt-3">
+          <table>
+            <tbody id="">
+              {% for i in jooble %}
+              <tr>
+                <td>
+                  <div
+                    class="card"
+                    style="box-shadow: 0px 0px 5px 0px rgba(184, 184, 184, 1);"
+                  >
+                    <div class="card-body">
+                      <h4
+                        style="margin-bottom: 0 !important;"
+                        class="card-title"
+                      >
+                      {{ i.company }} 
+                      <p style="display: none;"> {{ i.company.lower() }} </p>
+                      <p style="display: none;"> {{ i.position.lower() }} </p>
+                      </h4>
+                      <p class="card-text" style="margin-top: 0 !important;">
+                        {{ i.position }}
+                      </p>
+                      <p> {{ i.requirement }}                        </p>
+                      <p> <b> {{ i.salary }} </p> </b> <a href="{{i.link}}" class="btn btn-primary"target="_blank">Detail</a>
+                      <small class="float-right"> Sumber : Jooble</small>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              {% endfor %}
+              {% for i in lokerid %}
+              <tr>
+                <td>
+                  <div
+                    class="card"
+                    style="box-shadow: 0px 0px 5px 0px rgba(184, 184, 184, 1);"
+                  >
+                    <div class="card-body">
+                      <h4
+                        style="margin-bottom: 0 !important;"
+                        class="card-title"
+                      >
+                        {{ i.company }}
+                      <p style="display: none;"> {{ i.company.lower() }} </p>
+                      <p style="display: none;"> {{ i.position.lower() }} </p>
+                      </h4>
+                      <p class="card-text" style="margin-top: 0 !important;">
+                        {{ i.position }}
+                      </p>
+                      <p> {{ i.requirement }}                        </p>
+                      <p> <b> {{ i.salary }} </p> </b> <a href="{{i.link}}" class="btn btn-primary"target="_blank">Detail</a>
+                      <small class="float-right"> Sumber : Loker Id</small>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              {% endfor %}
+              {% for i in karir %}
+              <tr>
+                <td>
+                  <div
+                    class="card"
+                    style="box-shadow: 0px 0px 5px 0px rgba(184, 184, 184, 1);"
+                  >
+                    <div class="card-body">
+                      <h4
+                        style="margin-bottom: 0 !important;"
+                        class="card-title"
+                      >
+                        {{ i.company }}
+                      <p style="display: none;"> {{ i.company.lower() }} </p>
+                      <p style="display: none;"> {{ i.position.lower() }} </p>
+                      </h4>
+                      <p class="card-text" style="margin-top: 0 !important;">
+                        {{ i.position }}
+                      </p>
+                      <p>
+                        {{ i.requirement }}
+                      </p>
+                      <p> <b> {{ i.salary }} </p> </b> <a href="{{i.link}}" class="btn btn-primary"target="_blank">Detail</a>
+                      <small class="float-right"> Sumber : Karir</small>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            {% endfor %}
+              {% for i in topkarir %}
+              <tr>
+                <td>
+                  <div
+                    class="card"
+                    style="box-shadow: 0px 0px 5px 0px rgba(184, 184, 184, 1);"
+                  >
+                    <div class="card-body">
+                      <h4
+                        style="margin-bottom: 0 !important;"
+                        class="card-title"
+                      >
+                        {{ i.company }}
+                      <p style="display: none;"> {{ i.company.lower() }} </p>
+                      <p style="display: none;"> {{ i.position.lower() }} </p>
+                      </h4>
+                      <p class="card-text" style="margin-top: 0 !important;">
+                        {{ i.position }}
+                      </p>
+                      <p>
+                        {{ i.requirement }}
+                      </p>
+                      <p> <b> {{ i.salary }} </p> </b> <a href="{{i.link}}" class="btn btn-primary"target="_blank">Detail</a>
+                      <small class="float-right"> Sumber : Top Karir</small>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            {% endfor %}
+              {% for i in jobstreet %}
+              <tr>
+                <td>
+                  <div
+                    class="card"
+                    style="box-shadow: 0px 0px 5px 0px rgba(184, 184, 184, 1);"
+                  >
+                    <div class="card-body">
+                      <h4
+                        style="margin-bottom: 0 !important;"
+                        class="card-title"
+                      >
+                        {{ i.company }}
+                      <p style="display: none;"> {{ i.company.lower() }} </p>
+                      <p style="display: none;"> {{ i.position.lower() }} </p>
+                      </h4>
+                      <p class="card-text" style="margin-top: 0 !important;">
+                        {{ i.position }}
+                      </p>
+                      <p>
+                        {{ i.requirement }}
+                      </p>
+                      <p> <b> {{ i.salary }} </p> </b> <a href="{{i.link}}" class="btn btn-primary"target="_blank">Detail</a>
+                      <small class="float-right"> Sumber : Jobstreet</small>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            {% endfor %}
+                          {% for i in search %}
+              <tr>
+                <td>
+                  <div
+                    class="card"
+                    style="box-shadow: 0px 0px 5px 0px rgba(184, 184, 184, 1);"
+                  >
+                    <div class="card-body">
+                      <h4
+                        style="margin-bottom: 0 !important;"
+                        class="card-title"
+                      >
+                        {{ i.company }}
+                      <p style="display: none;"> {{ i.company.lower() }} </p>
+                      <p style="display: none;"> {{ i.position.lower() }} </p>
+                      </h4>
+                      <p class="card-text" style="margin-top: 0 !important;">
+                        {{ i.position }}
+                      </p>
+                      <p> {{ i.requirement }}                        </p>
+                      <p> <b> {{ i.salary }} </p> </b> <a href="{{i.link}}" class="btn btn-primary"target="_blank">Detail</a>
+                      <small class="float-right"> Sumber : {{param.title()}}</small>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              {% endfor %}
+
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+     //$(document).on("click",".query", function () {
+      function paleng(){
+                var value = document.getElementById("input_query").val();
+       alert(value);
+   }
+    </script>
+
+
+
+    <script>
+     $(document).on("keyup",".search-table", function () {
+                var value = $(this).val();
+                $("table tr").each(function (index) {
+                    $row = $(this);
+                    $row.show();
+                    if ( value) {
+                    //if (index !== 10 && value) {
+                        var found = false;
+                        $row.find("td").each(function () {
+                            var cell = $(this).text();
+                            if (cell.indexOf(value.toLowerCase()) >= 0) {
+                                found = true;
+                                return;
+                            } 
+                        });
+                        if (found === true) {
+                            $row.show();
+                        }
+                        else {
+                            $row.hide();
+                        }
+                    }
+          });
+   });
+    </script>
+
+    <script>
+    jQuery.fn.highlight = function(pat) {
+ function innerHighlight(node, pat) {
+  var skip = 0;
+  if (node.nodeType == 3) {
+   var pos = node.data.toUpperCase().indexOf(pat);
+   if (pos >= 0) {
+    var spannode = document.createElement('span');
+    spannode.className = 'highlight';
+    var middlebit = node.splitText(pos);
+    var endbit = middlebit.splitText(pat.length);
+    var middleclone = middlebit.cloneNode(true);
+    spannode.appendChild(middleclone);
+    middlebit.parentNode.replaceChild(spannode, middlebit);
+    skip = 1;
+   }
+  }
+  else if (node.nodeType == 1 && node.childNodes && !/(script|style)/i.test(node.tagName)) {
+   for (var i = 0; i < node.childNodes.length; ++i) {
+    i += innerHighlight(node.childNodes[i], pat);
+   }
+  }
+  return skip;
+ }
+ return this.each(function() {
+  innerHighlight(this, pat.toUpperCase());
+ });
+};
+
+jQuery.fn.removeHighlight = function() {
+ function newNormalize(node) {
+    for (var i = 0, children = node.childNodes, nodeCount = children.length; i < nodeCount; i++) {
+        var child = children[i];
+        if (child.nodeType == 1) {
+            newNormalize(child);
+            continue;
+        }
+        if (child.nodeType != 3) { continue; }
+        var next = child.nextSibling;
+        if (next == null || next.nodeType != 3) { continue; }
+        var combined_text = child.nodeValue + next.nodeValue;
+        new_node = node.ownerDocument.createTextNode(combined_text);
+        node.insertBefore(new_node, child);
+        node.removeChild(child);
+        node.removeChild(next);
+        i--;
+        nodeCount--;
+    }
+ }
+
+ return this.find("span.highlight").each(function() {
+    var thisParent = this.parentNode;
+    thisParent.replaceChild(this.firstChild, this);
+    newNormalize(thisParent);
+ }).end();
+};
+    </script>
+
+    
+<script type="text/javascript">
+$(function() {
+    $('#text-search').bind('keyup change', function(ev) {
+        // pull in the new value
+        var searchTerm = $(this).val();
+
+        // remove any old highlighted terms
+        $('table').removeHighlight();
+
+        // disable highlighting if empty
+        if ( searchTerm ) {
+            // highlight the new term
+            $('table').highlight( searchTerm );
+        }
+    });
+});
+
+</script>
+<script>
+  $(document).ready(function(){
+    $("#input_").keyup(function(event){
+      // skip for arrow keys
+      if(event.which >= 37 && event.which <= 40){
+          event.preventDefault();
+      }
+      var $this = $(this);
+      var num = $this.val().replace(/,/gi, "").split("").reverse().join("");
+      
+      var num2 = RemoveRougeChar(num.replace(/(.{3})/g,"$1,").split("").reverse().join(""));
+      
+      console.log(num2);
+      
+      
+      // the following line has been simplified. Revision history contains original.
+      $this.val(num2);
+  });
+});
+
+function RemoveRougeChar(convertString){
+    
+    
+    if(convertString.substring(0,1) == ","){
+        
+        return convertString.substring(1, convertString.length)            
+        
+    }
+    return convertString;
+    
+}
+
+</script>
+  </body>
+</html>
