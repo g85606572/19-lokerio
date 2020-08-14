@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 
 from function import _serial
 import time
@@ -9,6 +9,14 @@ import string
 
 
 app = Flask(__name__)
+app.secret_key = '#############-####my###-secr#3#et-key########'
+
+
+def search(l, w):
+    match_string = w
+    matched_sent = [s for s in l if len(re.findall(
+        r"\b{}\b".format(w), s, re.IGNORECASE)) > 0]
+    return matched_sent
 
 
 def findMatch(l, word):
@@ -16,11 +24,6 @@ def findMatch(l, word):
     print("\n".join(s for s in l if word.lower() in s.lower()))
     print('B==========')
     return [s for s in l if word.lower() in s.lower()]
-
-
-#word = 'Jaka'
-#l = ['it', 'jakarta', 'juta', 'jakabaring']
-#findMatch(l, word)
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -38,33 +41,11 @@ def home():
 def _search():
     kw = request.form.get('kw')
     src = request.form.get('db')
-    print("keword : ", kw, '\ndb : ', src)
     sal = request.form.get('sal')
-    search = db.reference(src).order_by_child('company').get()
-    myList = []
-    for i in search.values():
-        com = i.get('company')
-        pos = i.get('position')
-        sala = i.get('salary')
-        myList.append(com.strip())
-        myList.append(pos.strip())
-        myList.append(sala.strip())
-    # print(myList)
-
-    C = findMatch(myList, str(kw))
-    print('-------------------')
-    print(C)
-    print('-------------------')
-
-    for A in C:
-        match_company = db.reference(src).order_by_child(
-            'company').equal_to(A).get().values()
-        match_position = db.reference(src).order_by_child(
-            'position').equal_to(A).get().values()
-        match_salary = db.reference(src).order_by_child(
-            'salary').equal_to(A).get().values()
-        return render_template('index.html', lokerid='', jobstreet='', karir='', topkarir='', jooble='', by_company=match_company, by_position=match_position, by_salary=match_salary, param=src)
-    return render_template('index.html', lokerid='', jobstreet='', karir='', topkarir='', jooble='', search='', param=src)
+    i_resTitle = search(mylist, kw)
+    print(i_resTitle)
+    #flash('Menemukan {}  hasil terkait `{}`.'.format( len(i_resTitle), kw.title()))
+    return render_template('index.html', lokerid='', jobstreet='', karir='', topkarir='', jooble='', by_company='', by_position='', by_salary='', param=src)
 
 
 if __name__ == "__main__":
