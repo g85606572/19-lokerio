@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 
 from function import _serial
 import time
@@ -6,24 +6,46 @@ from database import*
 from pprint import pprint
 import re
 import string
+import random
 
-
+from function import _serial
+from collections import OrderedDict, Counter
 app = Flask(__name__)
 app.secret_key = '#############-####my###-secr#3#et-key########'
 
-
-def search(l, w):
-    match_string = w
-    matched_sent = [s for s in l if len(re.findall(
-        r"\b{}\b".format(w), s, re.IGNORECASE)) > 0]
-    return matched_sent
+# $Internal Functions
 
 
-def findMatch(l, word):
-    print('A==========')
-    print("\n".join(s for s in l if word.lower() in s.lower()))
-    print('B==========')
-    return [s for s in l if word.lower() in s.lower()]
+def r_pK():
+    try:
+        pK = []
+        other = ['.', '..', '...']
+        ref = db. reference('populer').order_by_child('id').get()
+
+        for k in ref.values():
+            refs = k.get('position')
+            url = k.get('url')
+
+            pK.append(refs.title()+' | ' + str(url))
+        return pK
+    except Exception as e:
+        return other
+
+
+def popularKeywords():
+    c = Counter(r_pK())
+    mc = c.most_common(3)
+    newMc = []
+    for row in mc:
+        a = row[0]
+        print(a)
+        newMc.append(a)
+    return newMc
+
+
+def randColor():
+    col = ['danger', 'primary', 'dark', 'secondary', 'success', 'warning']
+    return random.choice(col)
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -34,18 +56,17 @@ def home():
     karir = db.reference("karir").order_by_child("id").get().values()
     topkarir = db.reference("topkarir").order_by_child("id").get().values()
     jooble = db.reference("jooble").order_by_child("id").get().values()
-    return render_template('index.html', lokerid=lokerid, jobstreet=jobstreet, karir=karir, topkarir=topkarir, jooble=jooble)
+    return render_template('index.html', lokerid=lokerid, jobstreet=jobstreet, karir=karir, topkarir=topkarir, jooble=jooble, populer=popularKeywords(), randColor=randColor)
 
 
-@app.route('/search', methods=['POST'])  # JADI
-def _search():
-    kw = request.form.get('kw')
-    src = request.form.get('db')
-    sal = request.form.get('sal')
-    i_resTitle = search(mylist, kw)
-    print(i_resTitle)
-    #flash('Menemukan {}  hasil terkait `{}`.'.format( len(i_resTitle), kw.title()))
-    return render_template('index.html', lokerid='', jobstreet='', karir='', topkarir='', jooble='', by_company='', by_position='', by_salary='', param=src)
+@app.route('/populer', methods=['POST', 'GET'])  # J
+def popl():
+    id = _serial()
+    a = request.form.get('position')
+    b = request.form.get('url')
+    data = {"id": id, "position": a, "url": b}
+    db.reference("populer").child(id).update(data)
+    return redirect(b, code=302)
 
 
 if __name__ == "__main__":

@@ -1,3 +1,17 @@
+$(".pop").on("click", function () {
+  var dr_ = document.getElementById("reservation").value;
+  req = $.ajax({
+    url: "/background_process_test",
+    type: "POST",
+    data: { position: "p", url: "ur" },
+  });
+
+  req.done(function (data) {
+    alert(data.position);
+    $("#divx").remove();
+  });
+});
+
 $(document).ready(function () {
   $("select").change(function () {
     var element = document.getElementById("search").value;
@@ -156,7 +170,15 @@ $(function () {
     }
   });
 });
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //For Comma's Sparated Value
 $(document).ready(function () {
   $("#input_").keyup(function (event) {

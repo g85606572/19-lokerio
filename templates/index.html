@@ -72,15 +72,15 @@ aria-describedby="Keyword"
 <button type="submit" class="btn btn-warning " style="color: white; font-weight: bold;" > Populer </button>
 <div class="card">
   <div class="card-body">
-    <span class="badge badge-primary">Primary</span>
-<span class="badge badge-secondary">Secondary</span>
-<span class="badge badge-success">Success</span>
-<span class="badge badge-danger">Danger</span>
-<span class="badge badge-warning">Warning</span>
-<span class="badge badge-info">Info</span>
-<span class="badge badge-light">Light</span>
-<span class="badge badge-dark">Dark</span>
+    
+{% for i in populer %}
+<a href="{{i.split(' | ')[1]}}" target="_blank">
 
+  <span class="badge badge-{{randColor()}}">{{i.split(' | ')[0]}}</span>
+  <br>
+</a>
+
+{% endfor %}
   </div>
 </div>
 </div>
@@ -88,8 +88,8 @@ aria-describedby="Keyword"
 <hr>
 
 
-<div style="background-color: rgb(255, 153, 0); padding: 20px;" class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical" >
-<h4 style="color: white;">Pilih Kriteria</h4>
+<div style="background-color: rgb(255, 153, 0); padding: 10px;" class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical" >
+<h4 style="color: white;">Pilih Sumber</h4>
 <div class="form-group">
 <div class="form-group">
 <select required name="db" class="form-control" id="">
@@ -101,13 +101,9 @@ aria-describedby="Keyword"
 <option value="lokerid"> Loker Id </option>
 </select>
 </div>
-<input type="text" placeholder="Masukan Kata Kunci" class="form-control" id="search" />
+<input type="text" placeholder="Masukan Kata Kunci" class="form-control search-table" id="text-search" />
 </div>
-<div class="form-group">
-<input title="Kosongkan untuk tampilkan semua" type="hidden" placeholder="Gaji Minimum (IDR)" class="form-control" id="input_" aria-describedby="emailHelp" name="sal" id="id_step2-number_2" name="step2-number_2" />
-<br>
 <hr style="color: white;">
-</div>
 </div>
 </div>
 <div class="col-sm-9 mt-3 ">
@@ -141,7 +137,17 @@ class="card-title"
 {% else %}
 <p> <b> {{ i.salary }} </b> </p> 
 {% endif %}
-</p> </b> <a href="{{i.link}}" class="btn btn-primary"target="_blank">Detail</a>
+
+<!--
+</p> </b> <a href="{{i.link}}" class="btn btn-primary pop"target="_blank"  id="pop">Detail</a>
+  Optional  -->
+<form action="/populer" method="post">
+  <input type="hidden" name="url" id="" value="{{i.link}}">
+  <input type="hidden" name="position" id="" value="{{i.position}}">
+  <button type="submit" class="btn btn-primary">Detail</button>
+</form> 
+
+
 <small class="float-right"> Sumber : Jooble</small>
   <small style="display: none;" class="float-right"> Sumber : jooble</small>
 </div>
@@ -179,8 +185,12 @@ class="card-title"
 <p> <b> {{ i.salary }} </b> </p> 
 {% endif %}
 
+<form action="/populer" method="post">
+  <input type="hidden" name="url" id="" value="{{i.link}}">
+  <input type="hidden" name="position" id="" value="{{i.position}}">
+  <button type="submit" class="btn btn-primary">Detail</button>
+</form> 
 
-<a href="{{i.link}}" class="btn btn-primary"target="_blank">Detail</a>
 <small class="float-right"> Sumber : Loker Id</small>
 </div>
 </div>
@@ -218,7 +228,13 @@ class="card-title"
 {% else %}
 <p> <b> {{ i.salary }} </b> </p> 
 {% endif %}
-<a href="{{i.link}}" class="btn btn-primary"target="_blank">Detail</a>
+<form action="/populer" method="post">
+  <input type="hidden" name="url" id="" value="{{i.link}}">
+  <input type="hidden" name="position" id="" value="{{i.position}}">
+  <button type="submit" class="btn btn-primary">Detail</button>
+</form> 
+
+
 <small class="float-right"> Sumber : Karir</small>
 </div>
 </div>
@@ -257,7 +273,13 @@ class="card-title"
 {% else %}
 <p> <b> {{ i.salary }} </b> </p> 
 {% endif %}
-<a href="{{i.link}}" class="btn btn-primary"target="_blank">Detail</a>
+<form action="/populer" method="post">
+  <input type="hidden" name="url" id="" value="{{i.link}}">
+  <input type="hidden" name="position" id="" value="{{i.position}}">
+  <button type="submit" class="btn btn-primary">Detail</button>
+</form> 
+
+
 <small class="float-right"> Sumber : Top Karir</small>
 </div>
 </div>
@@ -295,8 +317,13 @@ class="card-title"
 {% else %}
 <p> <b> {{ i.salary }} </b> </p> 
 {% endif %}
+<form action="/populer" method="post">
+  <input type="hidden" name="url" id="" value="{{i.link}}">
+  <input type="hidden" name="position" id="" value="{{i.position}}">
+  <button type="submit" class="btn btn-primary">Detail</button>
+</form> 
 
-<a href="{{i.link}}" class="btn btn-primary"target="_blank">Detail</a>
+  
 <small class="float-right"> Sumber : Jobstreet</small>
 </div>
 </div>
@@ -330,9 +357,5 @@ crossorigin="anonymous"
 ></script>
 
 <script src="../static/myJs.js"></script>
-
-
-<script>
-</script>
 </body>
 </html>
