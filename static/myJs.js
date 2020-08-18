@@ -1,16 +1,8 @@
-$(".pop").on("click", function () {
-  var dr_ = document.getElementById("reservation").value;
-  req = $.ajax({
-    url: "/background_process_test",
-    type: "POST",
-    data: { position: "p", url: "ur" },
+String.prototype.toProperCase = function () {
+  return this.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
   });
-
-  req.done(function (data) {
-    alert(data.position);
-    $("#divx").remove();
-  });
-});
+};
 
 $(document).ready(function () {
   $("select").change(function () {
@@ -19,6 +11,9 @@ $(document).ready(function () {
     var X = element + text;
     $(".content").hide(1000);
     $('.content:contains("' + X + '")').show(10000);
+    $("content:not(:contains(" + text + "))").hide();
+    $("content:not(:contains(" + text.toLowerCase() + "))").hide();
+    $("content:not(:contains(" + text.toProperCase() + "))").hide();
   });
 });
 $(document).ready(function () {
@@ -37,12 +32,12 @@ $(document).ready(function () {
 
     // Hide all content class element
     $(".content").hide();
-
     // Search and show
     $('.content:contains("' + text + '")').show();
-    $('.content:contains("' + text.toLowerCase() + '")').show(10000);
-    $('.content:contains("' + text.toUpperCase() + '")').show(10000);
-    $('.content:contains("' + text + '")').show(10000);
+    $('.content:contains("' + text.toLowerCase() + '")').show();
+    $('.content:contains("' + text.toUpperCase() + '")').show();
+    $('.content:contains("' + text + '")').show();
+    $("content:not(:contains(" + text + "))").hide();
   });
 });
 

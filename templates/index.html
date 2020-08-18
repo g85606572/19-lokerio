@@ -26,6 +26,33 @@ rel="stylesheet"
 <link rel="stylesheet" href="../static/style.css">
 <title>Loker</title>
 </head>
+<style type="text/css">
+  .mobileShow {
+    display: none;
+  }
+  /* Smartphone Portrait and Landscape */
+  
+  @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    .mobileShow {
+      display: inline;
+    }
+  }
+</style>
+<!--.mobileHide{ display: none;}-->
+
+<style type="text/css">
+  .mobileHide {
+    display: inline;
+  }
+  /* Smartphone Portrait and Landscape */
+  
+  @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    .mobileHide {
+      display: none;
+    }
+  }
+</style>
+
 
 <nav class="navbar  sticky-top " style="background-color: rgb(255, 153, 0);">
   <a class="navbar-brand" href="/">
@@ -55,14 +82,23 @@ alt=""
 </div>
 <div class="col-md-9 m" style="margin-top: auto;">
 <div class="form-group">
-<input
-id="text-search"
-type="text"
-class="form-control search-table"
-style="padding: 25px;"
-placeholder="Sortir disemua sumber"
-aria-describedby="Keyword"
-/>
+  <div class="mobileHide">
+
+<!-- 
+    <p>TEXT OR IMAGE NOT FOR MOBILE HERE <p>
+  <p> yep its working</p>
+   -->
+  </div>
+  <div class="mobileHide">
+
+<!-- 
+    <p>THIS SHOULD NOT SHOW On Mobile (view in mobile mode)
+      <p>
+
+   -->
+<input type="text" placeholder="Masukan Kata Kunci" class="form-control" id="search" style="padding: 25px;" />
+  </div>
+
 </div>
 </div>
 </div>
@@ -101,7 +137,11 @@ aria-describedby="Keyword"
 <option value="lokerid"> Loker Id </option>
 </select>
 </div>
-<input type="text" placeholder="Masukan Kata Kunci" class="form-control search-table" id="text-search" />
+
+<input id="text-search" type="text" class="form-control search-table"  placeholder="Sortir disemua sumber" aria-describedby="Keyword" />
+
+<br>
+<input type="text" placeholder="Masukan Kata Kunci" class="form-control mobileShow" id="search" />
 </div>
 <hr style="color: white;">
 </div>
