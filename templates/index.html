@@ -51,10 +51,15 @@ rel="stylesheet"
       display: none;
     }
   }
+  .scroll {
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-y:hidden;
+}
 </style>
 
 
-<nav class="navbar  sticky-top " style="background-color: rgb(255, 153, 0);">
+<nav class="navbar" style="background-color: rgb(255, 153, 0);">
   <a class="navbar-brand" href="/">
 <img src="https://img.icons8.com/fluent/48/000000/order-delivered.png"
     width="50" height="50" class="d-inline-block align-top" alt="">
@@ -103,16 +108,17 @@ alt=""
 </div>
 </div>
 <div class="row">
-<div class="col-sm-3 mt-3">
-  <div style="background-color: rgb(255, 153, 0); padding: 10px;" class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical" >
+<div class="col-sm-3 mt-3 ">
+  <div style="background-color: rgb(255, 153, 0); padding: 10px;"  class="scroll" >
 <button type="submit" class="btn btn-warning " style="color: white; font-weight: bold;" > Populer </button>
-<div class="card">
-  <div class="card-body">
+<div class="card ">
+  <div class="card-body scroll">
     
 {% for i in populer %}
 <a href="{{i.split(' | ')[1]}}" target="_blank">
 
-  <span class="badge badge-{{randColor()}}">{{i.split(' | ')[0]}}</span>
+  <span class="mw-10 badge badge-{{randColor()}}">{{i.split(' | ')[0]}}
+  </span>
   <br>
 </a>
 
