@@ -10,6 +10,8 @@ import random
 
 from function import _serial
 from collections import OrderedDict, Counter
+
+
 app = Flask(__name__)
 app.secret_key = '#############-####my###-secr#3#et-key########'
 
@@ -69,6 +71,20 @@ def popl():
     db.reference("populer").child(id).update(data)
     return redirect(b, code=302)
 
+
+'''auto scrap setiap jam 8 pagi'''
+import schedule #ini schedule.py
+from scrap import jobstreet,karir,topkarir,jooble,loker_id
+'''auto scrap setiap jam 8 pagi'''
+def scrapOtomatis():
+    jobstreet()
+    loker_id()
+    karir()
+    jooble()
+    topkarir()
+    return 
+schedule.every().day.at("08:00").do(scrapOtomatis)
+'''auto scrap setiap jam 8 pagi'''
 
 if __name__ == "__main__":
     app.run(host='127.0.0.1', debug=True, port=9900)

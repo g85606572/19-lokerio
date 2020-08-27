@@ -108,7 +108,7 @@ def jobstreet():
         db.reference("jobstreet").child(id).update(data)
 
 
-jobstreet()
+#jobstreet()
 
 
 def loker_id():
@@ -139,7 +139,7 @@ def loker_id():
         db.reference("lokerid").child(id).update(data)
 
 
-loker_id()
+#loker_id()
 
 
 def karir():
@@ -172,7 +172,7 @@ def karir():
         db.reference("karir").child(id).update(data)
 
 
-karir()
+#karir()
 
 
 def topkarir():
@@ -205,7 +205,7 @@ def topkarir():
         db.reference("topkarir").child(id).update(data)
 
 
-topkarir()
+#topkarir()
 
 
 def jooble():
@@ -235,7 +235,32 @@ def jooble():
         print(random.choice(progress))
         print()
         print(data)
-        db.reference("jooble").child(id).update(data)
-
-
+        #db.reference("jooble").child(id).update(data)
 jooble()
+
+#jooble()
+def JLP():
+    url = "https://id.jooble.org/lowongan-kerja-it/bandar-lampung"
+    user_agent = random.choice(user_agent_list)
+    headers = {'User-Agent': user_agent}
+    r = requests.get(url, headers=headers, verify=True)
+    soup = BeautifulSoup(r.content,  "html.parser")
+    #data = soup.find_all("div",class_='result')
+    h2 = soup.find_all("h2",class_='position')
+    for i in h2 :
+        res = h2.find('span')
+        pprint(res)
+
+
+
+    #position = soup.find_all("h2", class_='_1e859')
+    #company = soup.find_all("span", class_='caption _8d375')
+    #requirement = soup.find_all("div", class_="_0b1c1")
+    #salary = soup.find_all("p", class_="_6f85c")
+    #link = soup.find_all("a", class_="baa11")
+    progress = [".", "..", "...", "....", "....."]
+
+
+#JLP()
+if __name__ == "__main__":
+    pass
